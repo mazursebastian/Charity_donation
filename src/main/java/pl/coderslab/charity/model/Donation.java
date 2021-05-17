@@ -3,8 +3,10 @@ package pl.coderslab.charity.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = "donation")
@@ -12,13 +14,14 @@ public class Donation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull
     @Column(name = "quantity", nullable = false, length = 50)
-    private int quantity;
+    private Integer quantity;
     @ManyToOne
-    @Column(name = "name_category", nullable = false, length = 100)
+
     private Category categories;
     @ManyToOne
-    @Column(name = "name_institution", nullable = false, length = 100)
+
     private Institution institution;
     @Column(name = "name_street", nullable = false, length = 100)
     private String street;
@@ -26,14 +29,17 @@ public class Donation {
     private String city;
     @Column(name = "name_zipCode", nullable = false, length = 100)
     private String zipCode;
+    @NotNull
     @Column(name = "pickUp_date", nullable = false, length = 100)
     private LocalDate pickUpDate;
+    @NotNull
     @Column(name = "pickUp_time", nullable = false, length = 100)
     private LocalTime pickUpTime;
+    @NotBlank
     @Column(name = "pickUp_comment", nullable = false, length = 100)
     private String pickUpComment;
 
-    public Donation(int quantity, Category categories, Institution institution, String street, String city, String zipCode, LocalDate pickUpDate, LocalTime pickUpTime, String pickUpComment) {
+    public Donation(Integer quantity, Category categories, Institution institution, String street, String city, String zipCode, LocalDate pickUpDate, LocalTime pickUpTime, String pickUpComment) {
         this.quantity = quantity;
         this.categories = categories;
         this.institution = institution;
@@ -43,6 +49,10 @@ public class Donation {
         this.pickUpDate = pickUpDate;
         this.pickUpTime = pickUpTime;
         this.pickUpComment = pickUpComment;
+    }
+
+    public Donation() {
+
     }
 
     public Long getId() {
