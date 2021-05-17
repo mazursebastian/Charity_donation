@@ -1,18 +1,20 @@
 package pl.coderslab.charity.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
+
 
 @Entity
-@Table(name="categories")
+@Table(name = "categories")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
-    public  Long id;
-    @NotEmpty
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public Long id;
+    @NotBlank
+    @Column(name = "name_category", nullable = false, length = 100)
     public String name;
 
-    public Category( String name) {
+    public Category(String name) {
         this.name = name;
     }
 

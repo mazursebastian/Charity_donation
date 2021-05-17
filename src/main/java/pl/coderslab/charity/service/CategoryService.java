@@ -6,10 +6,13 @@ import pl.coderslab.charity.repository.CategoryRep;
 
 @Service
 public class CategoryService {
-    private CategoryRep categoryRep;
-    public CategoryService(CategoryRep categoryRep){this.categoryRep= categoryRep;}
+    private  final CategoryRep categoryRep;
 
-    public void add(Category category){
+    public CategoryService(CategoryRep categoryRep) {
+        this.categoryRep = categoryRep;
+    }
+
+    public void add(Category category) {
         categoryRep.save(category);
     }
 }
