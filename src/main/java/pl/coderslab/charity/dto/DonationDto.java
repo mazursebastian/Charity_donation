@@ -1,20 +1,19 @@
-package pl.coderslab.charity.model;
+package pl.coderslab.charity.dto;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import pl.coderslab.charity.model.Category;
+import pl.coderslab.charity.model.Institution;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Entity
-@Table(name = "donation")
-public class Donation {
+public class DonationDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,32 +27,30 @@ public class Donation {
     @ManyToOne
     private Institution institution;
     @NotBlank
-    @Column(name = "name_street", nullable = false, length = 100)
+
     private String street;
     @NotBlank
-    @Column(name = "name_city", nullable = false, length = 100)
+
     private String city;
     @NotBlank
     // @Pattern("00-000")//wyrazenie regularne
-
-    @Column(name = "name_zipCode", nullable = false, length = 100)
+    @Pattern(message = "Proszę podać prawidłowy kod", regexp = "^[0-9]{2}-[0-9]{3}$")
     private String zipCode;
     @Pattern(message = "Proszę wpisać prawidłowy numer telefonu", regexp = "^[0-9]{9}")
     @NotNull
-    @Column(name = "phone_number", nullable = false, length = 10)
+
     private String phoneNumber;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @NotNull
-    @Column(name = "pickUp_date", nullable = false, length = 100)
+
     private LocalDate pickUpDate;
     @NotNull
-    @Column(name = "pickUp_time", nullable = false, length = 100)
     private LocalTime pickUpTime;
     //Walidacja do sprawdzania czy nei jest za dlugi string
-    @Column(name = "pickUp_comment", length = 100)
+
     private String pickUpComment;
 
-    public Donation(Long id, @NotNull Integer quantity, @NotEmpty List<Category> categories, @NotNull Institution institution, @NotBlank String street, @NotBlank String city, @NotBlank @Pattern(message = "Proszę podać prawidłowy kod", regexp = "^[0-9]{2}-[0-9]{3}$") String zipCode, @Pattern(message = "Proszę wpisać prawidłowy numer telefonu", regexp = "^[0-9]{9}") @NotNull String phoneNumber, @NotNull LocalDate pickUpDate, @NotNull LocalTime pickUpTime, String pickUpComment) {
+    public DonationDto(Long id, @NotNull Integer quantity, @NotEmpty List<Category> categories, @NotNull Institution institution, @NotBlank String street, @NotBlank String city, @NotBlank @Pattern(message = "Proszę podać prawidłowy kod", regexp = "^[0-9]{2}-[0-9]{3}$") String zipCode, @Pattern(message = "Proszę wpisać prawidłowy numer telefonu", regexp = "^[0-9]{9}") @NotNull String phoneNumber, @NotNull LocalDate pickUpDate, @NotNull LocalTime pickUpTime, String pickUpComment) {
         this.id = id;
         this.quantity = quantity;
         this.categories = categories;
@@ -67,7 +64,7 @@ public class Donation {
         this.pickUpComment = pickUpComment;
     }
 
-    public Donation() {
+    public DonationDto() {
 
     }
 
@@ -159,26 +156,4 @@ public class Donation {
         this.pickUpComment = pickUpComment;
     }
 
-    @Override
-    public String toString() {
-        return "Donation{" +
-                "id=" + id +
-                ", quantity=" + quantity +
-                ", categories=" + categories +
-                ", institution=" + institution +
-                ", street='" + street + '\'' +
-                ", city='" + city + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", pickUpDate=" + pickUpDate +
-                ", pickUpTime=" + pickUpTime +
-                ", pickUpComment='" + pickUpComment + '\'' +
-                '}';
-    }
 }
-
-
-
-
-
-

@@ -6,6 +6,9 @@ public interface GenerateService<T> {
     void add(T t);
     void update(T t);
     void delete(long id);
+    T showById(long id);
     List<T> showAll();
+
+
 
 }

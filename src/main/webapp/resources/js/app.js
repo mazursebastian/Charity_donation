@@ -159,11 +159,36 @@ document.addEventListener("DOMContentLoaded", function() {
           slide.classList.add("active");
         }
       });
+ if(this.currentStep==5) {
+   this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 5;
+   this.$step.parentElement.hidden = this.currentStep >= 5;
 
-      this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 5;
-      this.$step.parentElement.hidden = this.currentStep >= 5;
+   // TODO: get data from inputs and show them in summary
+   let categoriesForm = this.$form.querySelectorAll("[name='categories']:checked");
+   let categoriesAll = "";
+   categoriesForm.forEach(category => {
+     categoriesAll += category.nextElementSibling.nextElementSibling.nextElementSibling.innerText;
+   });
+   let institutionForm = this.$form.querySelector("input[name='institution']:checked");
 
-      // TODO: get data from inputs and show them in summary
+   let summaryText = this.$form.getElementsByClassName("summary--text");
+
+   summaryText[0].innerText =
+       "Ilość twoich worków wynosi: " + this.$form.querySelector("[name='quantity']").value + "\n" + "\n"
+       + " Zawartość twoich worków to: "
+       + categoriesAll;
+
+   //summaryText[1].innerText = institutionForm.nextElementSibling.nextElementSibling.innerText;
+
+   let deliveryColumn = this.$form.querySelectorAll(".summary .form-section--column li");
+   deliveryColumn[0].innerText = this.$form.querySelector("[name='street']").value;
+   deliveryColumn[1].innerText = this.$form.querySelector("[name='city']").value;
+   deliveryColumn[2].innerText = this.$form.querySelector("[name='zipCode']").value;
+   deliveryColumn[3].innerText = this.$form.querySelector("[name='phoneNumber']").value;
+   deliveryColumn[4].innerText = this.$form.querySelector("[name='pickUpDate']").value;
+   deliveryColumn[5].innerText = this.$form.querySelector("[name='pickUpTime']").value;
+   deliveryColumn[6].innerText = this.$form.querySelector("[name='pickUpComment']").value;
+ }
     }
 
   }
